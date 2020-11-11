@@ -1,5 +1,19 @@
 const domain="https://talents.arbre-clair.fr/"
 
+const lastUpdate={
+    assassin: "11 Nov 20",
+    champion: "11 Nov 20",
+    cleric: "11 Nov 20",
+    confessor: "11 Nov 20",
+//    duelist: "11 Nov 20",
+//    druid: "11 Nov 20",
+//    frostweaver: "11 Nov 20",
+//    knight: "11 Nov 20",
+//    myrmidon: "11 Nov 20",
+//    ranger: "11 Nov 20",
+//    templar: "11 Nov 20",
+}
+
 class TalentContainer extends HTMLElement {
     constructor() {
         super();
@@ -45,6 +59,10 @@ class TalentContainer extends HTMLElement {
 
         this.shadowRoot.innerHTML = `
             <style>
+                a {
+                    color: lightblue
+                }
+
                 #parent{
                     position:relative;
                     margin-top:1%;
@@ -95,6 +113,13 @@ class TalentContainer extends HTMLElement {
                     left: 0;
                     position: absolute;
                 }
+                #contact{
+                    font-size: 0.9vw;
+                    position: absolute;
+                    bottom:1%;
+                    left: 30%;
+                    z-index: 1000;
+                }
                 #parent .desc{
                     position: absolute;
                     top:0;
@@ -111,6 +136,9 @@ class TalentContainer extends HTMLElement {
                 }
                 #parent .desc.dis{
                     display: block;
+                }
+                small{
+                    font-size:0.5em
                 }
 
                 #a0 {
@@ -444,10 +472,13 @@ class TalentContainer extends HTMLElement {
                     <div class="button" id="j8"></div>
                     <div class="button" id="j9"></div>
 
-                    <div id="other">
-                    </div>
+                    <div id="other"></div>
                     <img id="desc-left" class="desc" />
                     <img id="desc-right"  class="desc" />
+                    <div id="contact" >
+                        By Aedius from <a href="https://crowfall.com/en-US/guilds/search?name=cac"> Communauté de l'Arbre Clair</a> |
+                        For any bug or improvement : <a href="https://github.com/Aedius/crowfall-talent">Github</a>
+                    </div>
                     </div>
                 </div>
                 <div id="reset">reset</div>
@@ -954,7 +985,11 @@ class TalentContainer extends HTMLElement {
 
         var classImg = ""
         if (this._class != ""){
-            const name = this._class.charAt(0).toUpperCase() + this._class.slice(1);
+            var name = this._class.charAt(0).toUpperCase() + this._class.slice(1);
+            const c = this._class
+            if (lastUpdate[c]){
+                name = `${name} <sup><small>( updated : ${lastUpdate[c]} )</small></sup>`
+            }
             classImg = `<img  class="top" src="${domain}/img/${this._class}/talent.png" />
                 <div class="name">${name}</div>`
         }
@@ -965,7 +1000,7 @@ class TalentContainer extends HTMLElement {
         this._talent.sort()
 
         const recapList = this._talent.map( code => {
-            if (code == "c2") {
+            if (code == "c2" || this._class == "") {
                 return;
             }
             return `<img src="${domain}/img/${this._class}/desc/${code}.png" />`
