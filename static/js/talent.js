@@ -5,13 +5,13 @@ const lastUpdate={
     champion: "11 Nov 20",
     cleric: "11 Nov 20",
     confessor: "11 Nov 20",
-//    duelist: "11 Nov 20",
-//    druid: "11 Nov 20",
-//    frostweaver: "11 Nov 20",
-//    knight: "11 Nov 20",
+    druid: "14 Nov 20",
+    duelist: "14 Nov 20",
+    frostweaver: "14 Nov 20",
+    knight: "14 Nov 20",
 //    myrmidon: "11 Nov 20",
-//    ranger: "11 Nov 20",
-//    templar: "11 Nov 20",
+    ranger: "14 Nov 20",
+    templar: "14 Nov 20",
 }
 
 class TalentContainer extends HTMLElement {
@@ -90,11 +90,26 @@ class TalentContainer extends HTMLElement {
                     //background-color:green;
                 }
                 #reset{
-                    background-color:red;
-                    padding: 1%;
+                    box-shadow:inset 0px 39px 0px -24px #e67a73;
+                    background-color:#e4685d;
+                    border-radius:10px;
+                    border:1px solid #ffffff;
+                    display:inline-block;
+                    cursor:pointer;
+                    color:#ffffff;
+                    font-family:Arial;
                     font-size: 2vw;
                     z-index: 100;
-                    width: 10%
+                    padding:1% 2%;
+                    text-decoration:none;
+                    text-shadow:0px 1px 0px #b23e35;
+                }
+                #reset:hover{
+                    background-color:#eb675e;
+                }
+                #reset:active{
+                    position:relative;
+                    top:1px;
                 }
                 #nb-container{
                     bottom : 0;
@@ -115,10 +130,8 @@ class TalentContainer extends HTMLElement {
                 }
                 #contact{
                     font-size: 0.9vw;
-                    position: absolute;
-                    bottom:1%;
-                    left: 30%;
-                    z-index: 1000;
+                    float: right;
+                    margin-top:1%;
                 }
                 #parent .desc{
                     position: absolute;
@@ -421,8 +434,8 @@ class TalentContainer extends HTMLElement {
                     <img class="classicone ${isChampion}" tag="champion" src="${domain}/img/champion/icone.png"/>
                     <img class="classicone ${isCleric}" tag="cleric" src="${domain}/img/cleric/icone.png"/>
                     <img class="classicone ${isConfessor}" tag="confessor" src="${domain}/img/confessor/icone.png"/>
-                    <img class="classicone ${isDuelist}" tag="duelist" src="${domain}/img/duelist/icone.png"/>
                     <img class="classicone ${isDruid}" tag="druid" src="${domain}/img/druid/icone.png"/>
+                    <img class="classicone ${isDuelist}" tag="duelist" src="${domain}/img/duelist/icone.png"/>
                     <img class="classicone ${isFrostweaver}" tag="frostweaver" src="${domain}/img/frostweaver/icone.png"/>
                     <img class="classicone ${isKnight}" tag="knight" src="${domain}/img/knight/icone.png"/>
                     <img class="classicone ${isMyrmidon}" tag="myrmidon" src="${domain}/img/myrmidon/icone.png"/>
@@ -475,13 +488,13 @@ class TalentContainer extends HTMLElement {
                     <div id="other"></div>
                     <img id="desc-left" class="desc" />
                     <img id="desc-right"  class="desc" />
-                    <div id="contact" >
-                        By Aedius from <a href="https://crowfall.com/en-US/guilds/search?name=cac"> Communauté de l'Arbre Clair</a> |
-                        For any bug or improvement : <a href="https://github.com/Aedius/crowfall-talent">Github</a>
-                    </div>
                     </div>
                 </div>
-                <div id="reset">reset</div>
+                <div id="contact" >
+                    By Aedius from <a href="https://crowfall.com/en-US/guilds/search?name=cac"> Communauté de l'Arbre Clair</a> |
+                    For any bug or improvement : <a href="https://github.com/Aedius/crowfall-talent">Github</a>
+                </div>
+                <div id="reset">Restart</div>
             <div>
             <div id="recap">
             </div>
