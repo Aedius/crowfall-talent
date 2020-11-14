@@ -9,7 +9,7 @@ const lastUpdate={
     duelist: "14 Nov 20",
     frostweaver: "14 Nov 20",
     knight: "14 Nov 20",
-//    myrmidon: "11 Nov 20",
+    myrmidon: "14 Nov 20",
     ranger: "14 Nov 20",
     templar: "14 Nov 20",
 }
