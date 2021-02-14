@@ -1,24 +1,24 @@
 const domain="https://talents.arbre-clair.fr/"
 
 const lastUpdate={
-    assassin: "17 Nov 20",
-    champion: "23 Nov 20",
-    cleric: "17 Nov 20",
-    confessor: "23 Nov 20",
-    druid: "23 Nov 20",
-    duelist: "23 Nov 20",
-    frostweaver: "23 Nov 20",
-    knight: "23 Nov 20",
-    myrmidon: "23 Nov 20",
-    ranger: "23 Nov 20",
-    templar: "17 Nov 20",
+    assassin: "14 Feb 21",
+    champion: "14 Feb 21",
+    cleric: "14 Feb 21",
+    confessor: "14 Feb 21",
+    druid: "14 Feb 21",
+    duelist: "14 Feb 21",
+    frostweaver: "14 Feb 21",
+    knight: "14 Feb 21",
+    myrmidon: "14 Feb 21",
+    ranger: "14 Feb 21",
+    templar: "14 Feb 21",
 }
 
 class TalentContainer extends HTMLElement {
     constructor() {
         super();
 
-        this._version="1.2";
+        this._version="2.0";
 
         this.attachShadow({ mode: 'open' });
 
