@@ -1,4 +1,4 @@
-const domain="file:///C:/Users/Admin/IdeaProjects/crowfall-talent/static/"
+const domain="https://talents.arbre-clair.fr/"
 
 const lastUpdate={
     assassin: "17 Nov 20",
