@@ -23,7 +23,6 @@ class TalentContainer extends HTMLElement {
     }
 
     set cl(newValue) {
-        console.log(newValue);
       this.setAttribute('cl', newValue);
     }
 
@@ -572,8 +571,6 @@ class TalentContainer extends HTMLElement {
     }
 
     _hashchange(event){
-        console.log({s:'CHANGE', current: this._currenthash, found: window.location.hash});
-
         if( "#"+this._currenthash != window.location.hash ){
             this._explode_hash(window.location.hash)
             this._display_class();
