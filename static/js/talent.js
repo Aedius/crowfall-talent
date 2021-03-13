@@ -1,3 +1,5 @@
+(function() {
+
 const domain="https://talents.arbre-clair.fr/"
 
 const lastUpdate={
@@ -15,6 +17,32 @@ const lastUpdate={
 }
 
 class TalentContainer extends HTMLElement {
+
+    get cl() {
+      return this.getAttribute('cl');
+    }
+
+    set cl(newValue) {
+        console.log(newValue);
+      this.setAttribute('cl', newValue);
+    }
+
+    _explode_hash(_hash){
+        _hash = _hash.substring(1);
+        var data = _hash.split("_")
+
+        if (data[0] == "1.0"){
+            data[0] = "1.1"
+            data[2] = data[2].replace('st', 'a0')
+            data[2] = data[2].replace('md', 'g0')
+        }
+
+        if( data.length==3 && data[0]==this._version ){
+            this._class=data[1];
+            this._talent=data[2].split("-").filter(word => word.length == 2);
+        }
+    }
+
     constructor() {
         super();
 
@@ -26,21 +54,10 @@ class TalentContainer extends HTMLElement {
 
         this._talent=[];
         this._class="";
+        this._currenthash="";
 
         if(_hash){
-            _hash = _hash.substring(1);
-            var data = _hash.split("_")
-
-            if (data[0] == "1.0"){
-                data[0] = "1.1"
-                data[2] = data[2].replace('st', 'a0')
-                data[2] = data[2].replace('md', 'g0')
-            }
-
-            if( data.length==3 && data[0]==this._version ){
-                this._class=data[1];
-                this._talent=data[2].split("-").filter(word => word.length == 2);
-            }
+            this._explode_hash(_hash)
         }
 
         var isAssassin = this._class=="assassin"? "selected" : "";
@@ -506,6 +523,17 @@ class TalentContainer extends HTMLElement {
         this._desc_right = this.shadowRoot.querySelector("#desc-right");
         this._recap = this.shadowRoot.querySelector("#recap");
 
+    }
+
+    connectedCallback() {
+
+        if (this.cl && this._class == ""){
+            this._class = this.cl;
+            this._display_class();
+        }
+
+        this._display();
+
         var buttonList = this.shadowRoot.querySelectorAll(".button")
         for (var i = 0; i < buttonList.length; i++) {
             buttonList[i].addEventListener('click', this._click.bind(this));
@@ -521,10 +549,37 @@ class TalentContainer extends HTMLElement {
             iconeList[i].addEventListener('click', this._class_change.bind(this));
         }
 
+        window.addEventListener("hashchange", this._hashchange.bind(this));
     }
 
-    connectedCallback() {
-        this._display();
+    disconnectedCallback(){
+         window.removeEventListener("hashchange", this._hashchange);
+
+         var buttonList = this.shadowRoot.querySelectorAll(".button")
+         for (var i = 0; i < buttonList.length; i++) {
+             buttonList[i].removeEventListener('click', this._click.bind(this));
+             buttonList[i].removeEventListener('mouseenter', this._mouse_enter.bind(this));
+             buttonList[i].removeEventListener('mouseleave', this._mouse_leave.bind(this));
+         }
+
+         this.shadowRoot.querySelector("#reset").removeEventListener('click', this._reset.bind(this));
+
+         var iconeList =  this.shadowRoot.querySelectorAll(".classicone")
+
+         for (var i = 0; i < iconeList.length; i++) {
+             iconeList[i].removeEventListener('click', this._class_change.bind(this));
+         }
+    }
+
+    _hashchange(event){
+        console.log({s:'CHANGE', current: this._currenthash, found: window.location.hash});
+
+        if( "#"+this._currenthash != window.location.hash ){
+            this._explode_hash(window.location.hash)
+            this._display_class();
+            this._display();
+        }
+
     }
 
     _reset(){
@@ -536,19 +591,21 @@ class TalentContainer extends HTMLElement {
 
         var newClass = event.target.getAttribute("tag")
         this._class = newClass;
+        this._display_class();
+        this._display();
+    }
+
+    _display_class(){
 
         var iconeList =  this.shadowRoot.querySelectorAll(".classicone")
 
         for (var i = 0; i < iconeList.length; i++) {
-            if (iconeList[i].getAttribute("tag") == newClass){
+            if (iconeList[i].getAttribute("tag") == this._class){
                 iconeList[i].classList.add("selected")
             }else{
                 iconeList[i].classList.remove("selected")
             }
         }
-
-
-        this._display();
     }
 
     _mouse_enter(event){
@@ -572,6 +629,7 @@ class TalentContainer extends HTMLElement {
         }
 
     }
+
     _mouse_leave(event){
         this._desc_right.src = ""
         this._desc_left.src = ""
@@ -1021,10 +1079,14 @@ class TalentContainer extends HTMLElement {
 
         this._recap.innerHTML= recapList.join('')
 
-        window.location.hash = this._version +"_"+ this._class +"_"+ this._talent.join("-")
+        this._currenthash=this._version +"_"+ this._class +"_"+ this._talent.join("-");
+        window.location.hash = this._currenthash;
         
 
     }
 
 }
-customElements.define('cac-talent-container', TalentContainer);
+
+window.customElements.define('cac-talent-container', TalentContainer);
+
+})();
