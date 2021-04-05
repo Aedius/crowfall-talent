@@ -3,17 +3,17 @@
 const domain="https://talents.arbre-clair.fr/"
 
 const lastUpdate={
-    assassin: "14 Feb 21",
-    champion: "14 Feb 21",
-    cleric: "14 Feb 21",
-    confessor: "14 Feb 21",
-    druid: "14 Feb 21",
-    duelist: "14 Feb 21",
-    frostweaver: "14 Feb 21",
-    knight: "14 Feb 21",
-    myrmidon: "14 Feb 21",
-    ranger: "14 Feb 21",
-    templar: "14 Feb 21",
+    assassin: "5 April 21",
+    champion: "5 April 21",
+    cleric: "5 April 21",
+    confessor: "5 April 21",
+    druid: "5 April 21",
+    duelist: "5 April 21",
+    frostweaver: "5 April 21",
+    knight: "5 April 21",
+    myrmidon: "5 April 21",
+    ranger: "5 April 21",
+    templar: "5 April 21",
 }
 
 class TalentContainer extends HTMLElement {
@@ -30,10 +30,10 @@ class TalentContainer extends HTMLElement {
         _hash = _hash.substring(1);
         var data = _hash.split("_")
 
-        if (data[0] == "1.0"){
-            data[0] = "1.1"
-            data[2] = data[2].replace('st', 'a0')
-            data[2] = data[2].replace('md', 'g0')
+        if (data[0] != this._version){
+            this._changelog = "https://community.crowfall.com/topic/30351-6510-live-update-notes-for-452021/";
+
+            data[0] = this._version
         }
 
         if( data.length==3 && data[0]==this._version ){
@@ -45,7 +45,8 @@ class TalentContainer extends HTMLElement {
     constructor() {
         super();
 
-        this._version="2.0";
+        this._version="6.5";
+        this._changelog=[];
 
         this.attachShadow({ mode: 'open' });
 
@@ -137,7 +138,7 @@ class TalentContainer extends HTMLElement {
                 #class-list{
                     text-align: center;
                 }
-                .name{
+                .name, #change-log{
                     font-size: 2vw;
                     padding:1%;
                     top : 0;
@@ -458,6 +459,7 @@ class TalentContainer extends HTMLElement {
                     <img class="classicone ${isRanger}" tag="ranger" src="${domain}/img/ranger/icone.png"/>
                     <img class="classicone ${isTemplar}" tag="templar" src="${domain}/img/templar/icone.png"/>
                 </div>
+                <div id="change-log"></div>
                 <div id="parent">
                     <div id="nb-container"><span id="nb">0</span> / 15</div>
                     <img src="${domain}/img/base.png" />
@@ -521,6 +523,7 @@ class TalentContainer extends HTMLElement {
         this._desc_left = this.shadowRoot.querySelector("#desc-left");
         this._desc_right = this.shadowRoot.querySelector("#desc-right");
         this._recap = this.shadowRoot.querySelector("#recap");
+        this._change_log = this.shadowRoot.querySelector("#change-log");
 
     }
 
@@ -1060,6 +1063,10 @@ class TalentContainer extends HTMLElement {
             }
             classImg = `<img  class="top" src="${domain}/img/${this._class}/talent.png" />
                 <div class="name">${name}</div>`
+        }
+
+        if(this._changelog != ""){
+            this._change_log.innerHTML = `Your build could be outdated, check the last changelog in <a href="${this._changelog}">the forum</a>`
         }
 
         this._other.innerHTML = imgList.join('') + classImg;
